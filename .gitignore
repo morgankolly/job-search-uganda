@@ -1,0 +1,15 @@
+/vendor/
+/uploads/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+cron.log
+*.log
+
+# Ignore OAuth callback/login files (if you intentionally don't want to track them)
+/admin/google-callback.php
+/admin/google-login.php
+/admin/github-login.php
