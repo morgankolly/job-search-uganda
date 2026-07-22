@@ -35,13 +35,7 @@ $statusColors = [
 ];
 
 // CV paths are stored relative to the project root; admin/ is one level down.
-function cvUrl(?string $path): ?string
-{
-    if (!$path) {
-        return null;
-    }
-    return '../' . ltrim($path, '/');
-}
+
 
 $pageTitle = 'Applications';
 include_once __DIR__ . '/components/header.php';

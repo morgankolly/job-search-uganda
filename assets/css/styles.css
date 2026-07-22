@@ -21377,3 +21377,12 @@ span.flatpickr-weekday {
             border-color: #cbd5e1 !important;
         }
 /*# sourceMappingURL=styles.css.map */
+
+  .stat-card { border-radius: 10px; border: transparent; }
+        .stat-card .icon-wrap {
+            width: 9px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+        }
+        .stat-value { font-size: 1.8rem; font-weight: 700; line-height: 1; }
+        .table-hover tbody tr:hover { background:rgb(197, 209, 222); }

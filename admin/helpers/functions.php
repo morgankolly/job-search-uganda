@@ -755,3 +755,11 @@ function generateWhatsAppLink($phone, $message)
     return "https://wa.me/".$phone."?text=".$message;
 
 }
+
+function cvUrl(?string $path): ?string
+{
+    if (!$path) {
+        return null;
+    }
+    return '../' . ltrim($path, '/');
+}

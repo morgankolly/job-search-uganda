@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Job-Search-System",
+			"path": "../.."
+		},
+		{
+			"name": "vendor",
+			"path": "../../../ticketing/vendor"
+		}
+	],
+	"settings": {}
+}

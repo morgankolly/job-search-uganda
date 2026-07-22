@@ -485,5 +485,74 @@ public function getJobTypeName($job_type)
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+      public function getPendingGuestJobs()
+    {
+        $stmt = $this->pdo->query("
+            SELECT 
+                gj.job_id,
+                gj.job_title,
+                gj.company_name,
+                gj.contact_person,
+                gj.email,
+                gj.created_at,
+
+                jt.type_name AS job_type
+
+            FROM guest_jobs gj
+
+            LEFT JOIN job_types jt
+                ON gj.job_type = jt.type_id
+
+            WHERE gj.status = 'pending'
+
+            ORDER BY gj.created_at DESC
+
+            LIMIT 5
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+     // Jobs by category
+    public function getJobsByCategory()
+    {
+        $stmt = $this->pdo->query("
+            SELECT 
+                jc.category_name,
+                COUNT(j.job_id) AS cnt
+            FROM job_categories jc
+            LEFT JOIN jobs j 
+                ON j.job_category = jc.category_id
+            GROUP BY jc.category_id, jc.category_name
+            ORDER BY cnt DESC
+            LIMIT 8
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+    // Guest jobs by category
+    public function getGuestJobsByCategory()
+    {
+        $stmt = $this->pdo->query("
+            SELECT 
+                jc.category_name,
+                COUNT(gj.job_id) AS cnt
+            FROM job_categories jc
+            LEFT JOIN guest_jobs gj 
+                ON gj.category_id = jc.category_id 
+                AND gj.status = 'approved'
+            GROUP BY jc.category_id, jc.category_name
+            ORDER BY cnt DESC
+            LIMIT 8
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
 }
 
