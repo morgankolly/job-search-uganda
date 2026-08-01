@@ -70,7 +70,7 @@ $_profileSrc = !empty($user['profile']) && strpos($user['profile'], '/') === fal
     ? '../uploads/profile/' . htmlspecialchars($user['profile'])
     : (empty($user['profile']) ? '' : htmlspecialchars($user['profile']));
 if (empty($_profileSrc)) {
-    $_profileSrc = 'https://ui-avatars.com/api/?name=' . urlencode($user['user_name']) . '&background=0d6efd&color=fff&size=80';
+    $_profileSrc = "http://localhost/Job-Search-System/uploads/profile/" . $filename;
 }
 ?>
 <!DOCTYPE html>
@@ -84,12 +84,7 @@ if (empty($_profileSrc)) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Font Awesome icons -->
-    <link rel="stylesheet" href="../assets/libs/fontawesome/css/all.min.css">
-
-    <!-- GXON base styles (layout skeleton) -->
-    <link rel="stylesheet" href="../assets/css/styles.css">
-
+   
     <style>
         /* ── Sidebar ─────────────────────────────────────── */
         :root {

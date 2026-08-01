@@ -6,49 +6,18 @@ ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/config/connection.php';
 require_once __DIR__ . '/helpers/functions.php';
 require_once __DIR__ . '/models/JobModel.php';
+require_once __DIR__ . '/models/UserModel.php'; 
+require_once __DIR__ . '/controllers/JobController.php';
+
 
 // Auth gate — redirect before any output if not logged in.
 if (!isset($_SESSION['user_id'])) { header('Location: index.php'); exit; }
 
 $jobModel = new JobModel($pdo);
+$userModel = new UserModel($pdo);
 $notice   = '';
 
-/* ---------------- Handle guest job moderation ---------------- */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guest_job_id'], $_POST['action'])) {
 
-    $guestJobId = (int) $_POST['guest_job_id'];
-    $action     = $_POST['action'];
-
-    $map = [
-        'approve' => 'approved',
-        'reject'  => 'rejected',
-        'close'   => 'closed',
-        'pending' => 'pending',
-    ];
-
-    if (isset($map[$action]) && $jobModel->updateGuestJobStatus($guestJobId, $map[$action])) {
-
-        $notice = "Guest job #{$guestJobId} marked as {$map[$action]}.";
-
-        // Notify the employer when their job goes live.
-        if ($action === 'approve') {
-            $guestJob = $jobModel->getGuestJobById($guestJobId);
-            if ($guestJob && function_exists('sendEmail')) {
-                $body = "
-                    <div style='font-family:Arial,sans-serif;'>
-                        <h2>Hello " . htmlspecialchars($guestJob['contact_person']) . ",</h2>
-                        <p>Your job <strong>" . htmlspecialchars($guestJob['job_title']) . "</strong>
-                        has been approved and is now live on Job Search Uganda.</p>
-                        <p>Reference: " . htmlspecialchars($guestJob['job_reference'] ?? '') . "</p>
-                    </div>
-                ";
-                @sendEmail($guestJob['email'], "Your job is now live", $body);
-            }
-        }
-    } else {
-        $notice = "Could not update guest job #{$guestJobId}.";
-    }
-}
 
 $guestJobs    = $jobModel->getAllGuestJobsForAdmin();
 $employerJobs = $jobModel->getAllEmployerJobs();

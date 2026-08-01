@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['createUser'])) {
             mkdir($uploadDir, 0755, true);
         }
 
-        $profile = 'default.png'; // default profile image
+        $profile = "http://localhost/Job-Search-System/uploads/profile/" . $filename;
 
         if (
             isset($_FILES['profile']) &&

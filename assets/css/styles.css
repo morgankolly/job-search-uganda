@@ -16,21 +16,10 @@
 
 */
 
-:root {
-  --custom-modal-backdrop-bg: #a6adbf;
-}
 
-:root {
-  --custom-body-bg: #fdfdfd;
-  --app-sidebar-bg: var(--bs-body-bg);
-  --app-header-bg: var(--bs-body-bg);
-}
 
-[data-bs-theme="dark"] {
-  --custom-body-bg: var(--bs-secondary-bg);
-  --app-sidebar-bg: var(--bs-body-bg);
-  --app-header-bg: var(--bs-body-bg);
-}
+
+
 
 /*!
  * Bootstrap  v5.3.8 (https://getbootstrap.com/)
@@ -21247,142 +21236,89 @@ span.flatpickr-weekday {
     height: auto;
 }
 
-  body {
-            background-color: #f8fafc;
-            color: #334155;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-        h2 {
-            color: #0f172a;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-        }
-        .badge.bg-primary {
-            background-color: #2563eb !important;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 600;
-        }
-        /* Search and Filter Card */
-        .card.shadow-sm.mb-4 {
-            border: none !important;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
-            background-color: #ffffff;
-            padding: 0.5rem;
-        }
-        .form-control, .form-select {
-            border: 1px solid #e2e8f0;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            color: #475569;
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
-        /* Job Card Container */
-        .job-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .job-card:hover {
-            transform: translateY(-5px);
-        }
-        /* Job Card Element */
-        .job-card .card {
-            border: none !important;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
-            background-color: #ffffff;
-            overflow: hidden;
-            transition: box-shadow 0.2s ease;
-        }
-        .job-card:hover .card {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
-        }
-        /* Body elements inside Card */
-        .job-card h5.fw-bold {
-            color: #0f172a;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-        .job-card .badge.bg-success {
-            background-color: #ecfdf5 !important;
-            color: #059669 !important;
-            font-weight: 600;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            border: 1px solid #d1fae5;
-            display: inline-block;
-        }
-        /* Row Spacing & Typography */
-        .job-card p {
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
-            color: #475569;
-            line-height: 1.5;
-        }
-        .job-card p strong {
-            color: #1e293b;
-            font-weight: 600;
-            display: inline-block;
-            min-width: 120px;
-        }
-        /* Specific treatment for Deadline alert */
-        .job-card p.text-danger {
-            background-color: #fef2f2;
-            color: #dc2626 !important;
-            padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            display: inline-block;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            margin-bottom: 0;
-            font-size: 0.85rem;
-        }
-        .job-card p.text-danger strong {
-            color: #dc2626 !important;
-            min-width: auto;
-            margin-right: 4px;
-        }
-        /* Buttons inside footer */
-        .job-card .card-footer {
-            border-top: 1px solid #f1f5f9 !important;
-            padding: 1.25rem 1.5rem 1.5rem !important;
-        }
-        .btn-primary {
-            background-color: #2563eb !important;
-            border-color: #2563eb !important;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.6rem 1rem;
-            transition: background-color 0.15s ease;
-        }
-        .btn-primary:hover {
-            background-color: #1d4ed8 !important;
-            border-color: #1d4ed8 !important;
-        }
-        .btn-outline-primary {
-            color: #2563eb !important;
-            border-color: #e2e8f0 !important;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.6rem 1rem;
-            transition: all 0.15s ease;
-        }
-        .btn-outline-primary:hover {
-            background-color: #f1f5f9 !important;
-            color: #1d4ed8 !important;
-            border-color: #cbd5e1 !important;
-        }
-/*# sourceMappingURL=styles.css.map */
-
-  .stat-card { border-radius: 10px; border: transparent; }
-        .stat-card .icon-wrap {
-            width: 9px; height: 48px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem;
-        }
-        .stat-value { font-size: 1.8rem; font-weight: 700; line-height: 1; }
-        .table-hover tbody tr:hover { background:rgb(197, 209, 222); }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        color: #222;
+    }
+    .wrap {
+        max-width: 480px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        padding: 30px;
+    }
+    h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 4px;
+    }
+    .ref {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+    .amount {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1a7f37;
+        margin: 10px 0 20px;
+    }
+    .box {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .box strong { color: #111; }
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+    }
+    button {
+        width: 100%;
+        background: #1a7f37;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    button:hover { background: #166a2e; }
+    .msg {
+        padding: 12px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .msg.error { background: #fdecea; color: #b42318; border: 1px solid #f5c2c0; }
+    .msg.notice { background: #eaf7ee; color: #1a7f37; border: 1px solid #bfe8cb; }
+    .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .status-pending { background: #fef3cd; color: #92720d; }
+    .status-verified { background: #d4edda; color: #1a7f37; }

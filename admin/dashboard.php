@@ -143,7 +143,7 @@ include_once __DIR__ . '/components/header.php';
     <link rel="stylesheet" href="../assets/libs/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../assets/libs/simplebar/simplebar.css">
     <link rel="stylesheet" href="../assets/libs/node-waves/waves.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
+
     <link rel="stylesheet" href="../assets/css/.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -152,11 +152,11 @@ include_once __DIR__ . '/components/header.php';
 </head>
 <body>
 
-<main class="app-wrapper">
+<main class="app-wrapper-expand-lg">
 <div class="container py-4">
 
     <!-- Page header -->
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-9">
         <div>
             <h4 class="mb-0 fw-bold">
                 Welcome back, <?= htmlspecialchars($user['user_name'] ?? 'Admin') ?>
@@ -413,25 +413,10 @@ include_once __DIR__ . '/components/header.php';
 
 </div><!-- /container -->
 
-<!-- Footer -->
-<footer class="footer-wrapper bg-body py-3">
-    <div class="container-fluid px-4">
-        <div class="d-flex justify-content-between flex-wrap gap-2">
-            <p class="mb-0 text-muted small">
-                &copy; <?= date('Y') ?> Job Search Uganda
-            </p>
-            <ul class="list-inline mb-0 d-flex gap-3">
-                <li><a class="text-muted small" href="../index.php" target="_blank">Public Site</a></li>
-                <li><a class="text-muted small" href="jobs.php">Manage Jobs</a></li>
-                <li><a class="text-muted small" href="applications.php">Applications</a></li>
-                <li><a class="text-muted small" href="logout.php" class="text-danger">Logout</a></li>
-            </ul>
-        </div>
-    </div>
-</footer>
+
 
 </main><!-- /app-wrapper -->
-
+<?php include_once __DIR__ . '/components/footer.php'; ?>
 <!-- ==================== CHARTS JS ==================== -->
 <script>
 const chartDefaults = {

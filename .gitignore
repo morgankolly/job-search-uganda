@@ -13,3 +13,4 @@ cron.log
 /admin/google-callback.php
 /admin/google-login.php
 /admin/github-login.php
+/admin/config/pesapal.php

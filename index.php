@@ -5,6 +5,7 @@ ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/admin/config/connection.php';
 require_once __DIR__ . '/admin/helpers/functions.php';
 require_once __DIR__ . '/admin/models/JobModel.php';
+include_once __DIR__ . '/admin/components/Userheader.php';
 
 
 $jobModel = new JobModel($pdo);
@@ -69,8 +70,9 @@ usort($jobs, function ($a, $b) {
     <!-- begin::GXON CSS Stylesheet -->
     <link rel="stylesheet" href="assets/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="assets/libs/datatables/datatables.min.css">
+
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- end::GXON CSS Stylesheet -->
 
@@ -82,48 +84,7 @@ usort($jobs, function ($a, $b) {
 <div class="container py-5">
 
     <!-- System Process / How it Works Header -->
-    <div class="row g-4 mb-5 text-center">
-        <div class="col-12">
-            <h3 class="fw-bold">How Our System Works</h3>
-            <p class="text-muted">Follow three simple steps to secure your next career opportunity.</p>
-        </div>
-        
-        <div class="col-md-4">
-            <div class="card h-100 border-0 bg-light p-3">
-                <div class="card-body">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.25rem;">
-                        1
-                    </div>
-                    <h5 class="fw-bold">Filter & Search</h5>
-                    <p class="text-muted small mb-0">Use the search bar, job categories, or job types below to instantly narrow down positions that match your skills.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 border-0 bg-light p-3">
-                <div class="card-body">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.25rem;">
-                        2
-                    </div>
-                    <h5 class="fw-bold">Review Details</h5>
-                    <p class="text-muted small mb-0">Click "View Details" on any job card to read the full description, company requirements, salary info, and deadline dates.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 border-0 bg-light p-3">
-                <div class="card-body">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px; font-weight: bold; font-size: 1.25rem;">
-                        3
-                    </div>
-                    <h5 class="fw-bold">Apply Instantly</h5>
-                    <p class="text-muted small mb-0">Hit "Apply Now" to submit your application directly to the employer or reach out using the provided contact info.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <hr class="mb-5 text-muted opacity-25">
 

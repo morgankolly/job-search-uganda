@@ -463,7 +463,10 @@ include_once __DIR__ . '/components/header.php';
 
     </div><!-- /row -->
 </div><!-- /container -->
+<?php
+include_once __DIR__ . '/components/footer.php';
 
+?>
 <script>
 /* ── Live preview ──────────────────────────────────── */
 const previewTitle    = document.getElementById('previewJobTitle');
