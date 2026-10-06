@@ -39,9 +39,9 @@ $message = "";
 
         <div class="card shadow-lg border-0 rounded-4 p-4">
 
-          <div class="text-center mb-4">
+          <div class="text-center mb-3">
             <a href="../index.html">
-              <img src="../assets/images/Logo 1.png" alt="Logo" style="width:80px;height:auto;">
+              <img src="../uploads/profile/Job-Search-logo.png" alt="Logo" style="width:80px;height:auto;">
             </a>
           </div>
 

@@ -16,21 +16,10 @@
 
 */
 
-:root {
-  --custom-modal-backdrop-bg: #a6adbf;
-}
 
-:root {
-  --custom-body-bg: #fdfdfd;
-  --app-sidebar-bg: var(--bs-body-bg);
-  --app-header-bg: var(--bs-body-bg);
-}
 
-[data-bs-theme="dark"] {
-  --custom-body-bg: var(--bs-secondary-bg);
-  --app-sidebar-bg: var(--bs-body-bg);
-  --app-header-bg: var(--bs-body-bg);
-}
+
+
 
 /*!
  * Bootstrap  v5.3.8 (https://getbootstrap.com/)
@@ -21247,133 +21236,931 @@ span.flatpickr-weekday {
     height: auto;
 }
 
-  body {
-            background-color: #f8fafc;
-            color: #334155;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-        h2 {
-            color: #0f172a;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-        }
-        .badge.bg-primary {
-            background-color: #2563eb !important;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 600;
-        }
-        /* Search and Filter Card */
-        .card.shadow-sm.mb-4 {
-            border: none !important;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
-            background-color: #ffffff;
-            padding: 0.5rem;
-        }
-        .form-control, .form-select {
-            border: 1px solid #e2e8f0;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            color: #475569;
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
-        /* Job Card Container */
-        .job-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .job-card:hover {
-            transform: translateY(-5px);
-        }
-        /* Job Card Element */
-        .job-card .card {
-            border: none !important;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
-            background-color: #ffffff;
-            overflow: hidden;
-            transition: box-shadow 0.2s ease;
-        }
-        .job-card:hover .card {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
-        }
-        /* Body elements inside Card */
-        .job-card h5.fw-bold {
-            color: #0f172a;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-        .job-card .badge.bg-success {
-            background-color: #ecfdf5 !important;
-            color: #059669 !important;
-            font-weight: 600;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            border: 1px solid #d1fae5;
-            display: inline-block;
-        }
-        /* Row Spacing & Typography */
-        .job-card p {
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
-            color: #475569;
-            line-height: 1.5;
-        }
-        .job-card p strong {
-            color: #1e293b;
-            font-weight: 600;
-            display: inline-block;
-            min-width: 120px;
-        }
-        /* Specific treatment for Deadline alert */
-        .job-card p.text-danger {
-            background-color: #fef2f2;
-            color: #dc2626 !important;
-            padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            display: inline-block;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            margin-bottom: 0;
-            font-size: 0.85rem;
-        }
-        .job-card p.text-danger strong {
-            color: #dc2626 !important;
-            min-width: auto;
-            margin-right: 4px;
-        }
-        /* Buttons inside footer */
-        .job-card .card-footer {
-            border-top: 1px solid #f1f5f9 !important;
-            padding: 1.25rem 1.5rem 1.5rem !important;
-        }
-        .btn-primary {
-            background-color: #2563eb !important;
-            border-color: #2563eb !important;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.6rem 1rem;
-            transition: background-color 0.15s ease;
-        }
-        .btn-primary:hover {
-            background-color: #1d4ed8 !important;
-            border-color: #1d4ed8 !important;
-        }
-        .btn-outline-primary {
-            color: #2563eb !important;
-            border-color: #e2e8f0 !important;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.6rem 1rem;
-            transition: all 0.15s ease;
-        }
-        .btn-outline-primary:hover {
-            background-color: #f1f5f9 !important;
-            color: #1d4ed8 !important;
-            border-color: #cbd5e1 !important;
-        }
-/*# sourceMappingURL=styles.css.map */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        color: #222;
+    }
+    .wrap {
+        max-width: 480px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        padding: 30px;
+    }
+    h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 4px;
+    }
+    .ref {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+    .amount {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1a7f37;
+        margin: 10px 0 20px;
+    }
+    .box {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .box strong { color: #111; }
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+    }
+    button {
+        width: 100%;
+        background: #1a7f37;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    button:hover { background: #166a2e; }
+    .msg {
+        padding: 12px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .msg.error { background: #fdecea; color: #b42318; border: 1px solid #f5c2c0; }
+    .msg.notice { background: #eaf7ee; color: #1a7f37; border: 1px solid #bfe8cb; }
+    .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .status-pending { background: #fef3cd; color: #92720d; }
+    .status-verified { background: #d4edda; color: #1a7f37; }
+
+
+  @import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
+
+.contact-frontdesk {
+  --cf-stamp: var(--bs-danger);
+  --cf-steel: var(--bs-primary);
+  --cf-sticky: var(--bs-warning);
+  --cf-ok: var(--bs-success);
+  --cf-folder: var(--bs-light-bg-subtle, var(--bs-light));
+  --cf-folder-tab: var(--bs-secondary-bg-subtle, var(--bs-secondary));
+  --cf-paper: var(--bs-body-bg);
+  --cf-paper-text: var(--bs-heading-color);
+  --cf-muted: var(--bs-secondary-color);
+  --font-stamp: "Special Elite", var(--bs-body-font-family);
+
+  background:
+    radial-gradient(circle at 12% 10%, rgba(var(--bs-primary-rgb), 0.10), transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(var(--bs-danger-rgb), 0.08), transparent 45%),
+    var(--bs-dark);
+  color: var(--cf-folder);
+  font-family: var(--bs-body-font-family);
+  padding: 48px 20px 80px;
+  border-radius: var(--bs-border-radius-xl);
+}
+
+.contact-frontdesk .cf-page {
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+/* ---------- header plaque ---------- */
+.contact-frontdesk .cf-signage {
+  text-align: center;
+  padding-bottom: 30px;
+}
+.contact-frontdesk .cf-plaque {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--bs-font-monospace);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(var(--bs-primary-rgb), 0.18);
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.4);
+  border-radius: var(--bs-border-radius-sm);
+  padding: 6px 14px;
+  margin-bottom: 20px;
+}
+.contact-frontdesk .cf-plaque .cf-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cf-ok);
+  box-shadow: 0 0 6px var(--cf-ok);
+}
+.contact-frontdesk .cf-signage h1 {
+  font-family: var(--font-stamp);
+  font-weight: 400;
+  font-size: clamp(38px, 7vw, 68px);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  color: #fff;
+}
+.contact-frontdesk .cf-signage h1 .cf-accent { color: var(--cf-stamp); }
+.contact-frontdesk .cf-signage p.cf-sub {
+  max-width: 540px;
+  margin: 18px auto 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---------- layout ---------- */
+.contact-frontdesk .cf-folder-wrap {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 0;
+  position: relative;
+}
+
+/* ---------- left: intake form (manila folder) ---------- */
+.contact-frontdesk .cf-folder {
+  background: var(--cf-paper);
+  color: var(--cf-paper-text);
+  border-radius: 4px var(--bs-border-radius-xl) var(--bs-border-radius-xl) var(--bs-border-radius-xl);
+  position: relative;
+  box-shadow: var(--bs-box-shadow-lg);
+  border: var(--bs-border-width) solid var(--bs-border-color);
+}
+.contact-frontdesk .cf-folder-tab {
+  position: absolute;
+  top: -26px;
+  left: 32px;
+  background: var(--cf-folder-tab);
+  color: var(--bs-heading-color);
+  font-family: var(--bs-font-monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 18px 20px;
+  border-radius: var(--bs-border-radius-sm) var(--bs-border-radius-sm) 0 0;
+}
+.contact-frontdesk .cf-form-inner {
+  padding: 46px 44px 40px;
+  position: relative;
+}
+.contact-frontdesk .cf-form-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 26px;
+  padding-bottom: 16px;
+  border-bottom: var(--bs-border-width) dashed var(--bs-border-color);
+}
+.contact-frontdesk .cf-form-head h2 {
+  font-family: var(--font-stamp);
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--bs-heading-color);
+}
+.contact-frontdesk .cf-form-head .cf-case {
+  font-family: var(--bs-font-monospace);
+  font-size: 11px;
+  color: var(--cf-stamp);
+  letter-spacing: 0.08em;
+}
+
+.contact-frontdesk form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.contact-frontdesk .cf-field label {
+  display: block;
+  font-family: var(--bs-font-monospace);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cf-muted);
+  margin-bottom: 8px;
+}
+.contact-frontdesk .cf-field .cf-req { color: var(--cf-stamp); }
+
+/* Reuse the theme's native form-control / form-select styling
+   instead of redefining borders/radius/shadow from scratch —
+   just add the textarea min-height this layout needs. */
+.contact-frontdesk .cf-field textarea.form-control {
+  min-height: 108px;
+}
+
+.contact-frontdesk .cf-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-frontdesk .cf-submit-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 4px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.contact-frontdesk .cf-file-it {
+  font-family: var(--font-stamp);
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: 0.03em;
+}
+
+.contact-frontdesk .cf-submit-hint {
+  font-size: 12.5px;
+  color: var(--cf-muted);
+}
+
+.contact-frontdesk .cf-stamp-mark {
+  position: absolute;
+  top: -18px;
+  right: 8px;
+  font-family: var(--font-stamp);
+  font-size: 20px;
+  color: var(--cf-stamp);
+  border: 3px solid var(--cf-stamp);
+  border-radius: var(--bs-border-radius-sm);
+  padding: 4px 12px;
+  transform: rotate(-9deg);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+.contact-frontdesk .cf-stamp-mark.show {
+  opacity: 0.88;
+  animation: cf-stampdown 0.28s ease;
+}
+@keyframes cf-stampdown {
+  0%   { transform: rotate(-9deg) scale(1.8); opacity: 0; }
+  70%  { opacity: 0.95; }
+  100% { transform: rotate(-9deg) scale(1); opacity: 0.88; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-frontdesk .cf-stamp-mark.show { animation: none; }
+}
+
+.contact-frontdesk .cf-form-status {
+  font-family: var(--bs-font-monospace);
+  font-size: 12.5px;
+  padding: 12px 14px;
+  border-radius: var(--bs-border-radius);
+  display: none;
+  background: var(--bs-success-bg-subtle);
+  color: var(--bs-success-text-emphasis);
+  border: var(--bs-border-width) solid var(--bs-success-border-subtle);
+}
+.contact-frontdesk .cf-form-status.show { display: block; }
+
+/* ---------- right: directory ---------- */
+.contact-frontdesk .cf-corkboard {
+  background:
+    repeating-radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    var(--bs-dark);
+  border-radius: var(--bs-border-radius-xl);
+  margin-left: -14px;
+  margin-top: 18px;
+  padding: 40px 28px 30px;
+  position: relative;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.35), var(--bs-box-shadow-lg);
+}
+.contact-frontdesk .cf-cork-head {
+  font-family: var(--bs-font-monospace);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 18px;
+  opacity: 0.85;
+}
+.contact-frontdesk .cf-card {
+  background: var(--bs-body-bg);
+  color: var(--bs-heading-color);
+  border-radius: var(--bs-border-radius-sm);
+  padding: 14px 16px 14px 18px;
+  margin-bottom: 14px;
+  position: relative;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.3);
+  transform: rotate(var(--cf-tilt, -1deg));
+}
+.contact-frontdesk .cf-card:nth-child(odd)  { --cf-tilt: 1.2deg; }
+.contact-frontdesk .cf-card:nth-child(even) { --cf-tilt: -1deg; }
+.contact-frontdesk .cf-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e8735a, var(--cf-stamp));
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+.contact-frontdesk .cf-card-name { font-weight: 700; font-size: 14px; }
+.contact-frontdesk .cf-card-desc {
+  font-size: 12px;
+  color: var(--cf-muted);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+.contact-frontdesk .cf-card-meta {
+  font-family: var(--bs-font-monospace);
+  font-size: 11px;
+  color: var(--cf-steel);
+  margin-top: 8px;
+}
+.contact-frontdesk .cf-hours-note {
+  background: var(--cf-sticky);
+  color: var(--bs-warning-text-emphasis);
+  font-family: var(--bs-font-monospace);
+  font-size: 12px;
+  line-height: 1.7;
+  padding: 14px 16px;
+  border-radius: var(--bs-border-radius-sm);
+  margin-top: 6px;
+  transform: rotate(-1.4deg);
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.3);
+}
+.contact-frontdesk .cf-hours-note b {
+  display: block;
+  font-family: var(--font-stamp);
+  font-size: 13px;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+@media (max-width: 760px) {
+  .contact-frontdesk .cf-folder-wrap { grid-template-columns: 1fr; }
+  .contact-frontdesk .cf-corkboard { margin-left: 0; }
+  .contact-frontdesk .cf-form-inner { padding: 40px 26px 34px; }
+  .contact-frontdesk .cf-row-2 { grid-template-columns: 1fr; }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fa;
+    color: #102a43;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.main-header {
+    height: 100px;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+    display: flex;
+    align-items: center;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 984px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0;
+}
+
+/* LOGO */
+
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.logo-area img {
+    width: 85px;
+    height: auto;
+    display: block;
+}
+
+/* NAVIGATION */
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-left: 70px;
+}
+
+.main-nav a {
+    color: #333333;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #2864f0;
+}
+
+/* HEADER BUTTONS */
+
+.header-actions {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+}
+
+.btn-employer {
+    height: 38px;
+    padding: 0 20px;
+    border: 1px solid #2864f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #2864f0;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-admin {
+    height: 38px;
+    padding: 0 20px;
+    border: 1px solid #2864f0;
+    border-radius: 8px;
+    background: #2864f0;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-employer:hover {
+    background: #eef4ff;
+}
+
+.btn-admin:hover {
+    background: #1d55d8;
+    color: #fff;
+}
+
+
+/* =========================================================
+   BLUE HERO
+========================================================= */
+
+.contact-hero {
+    background: #3267f5;
+    min-height: 270px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-container {
+    width: 100%;
+    max-width: 984px;
+    margin: auto;
+    padding: 38px 0 42px;
+}
+
+.hero-title {
+    margin: 0;
+    max-width: 600px;
+    color: #092c66;
+    font-size: 43px;
+    line-height: 1.15;
+    font-weight: 750;
+    letter-spacing: -1.4px;
+}
+
+.hero-text {
+    margin-top: 17px;
+    max-width: 680px;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.hero-buttons {
+    margin-top: 21px;
+    display: flex;
+    gap: 11px;
+}
+
+.hero-btn-primary {
+    background: #ffffff;
+    color: #111111;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.hero-btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.hero-btn-primary:hover {
+    background: #f2f4f7;
+    color: #111111;
+}
+
+.hero-btn-secondary:hover {
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.contact-section {
+    max-width: 984px;
+    margin: 0 auto;
+    padding: 48px 0 70px;
+}
+
+.section-line {
+    height: 1px;
+    background: #dfe4ea;
+    margin-bottom: 37px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    color: #102a43;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.section-heading p {
+    margin: 8px 0 0;
+    color: #aabbd7;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.open-badge {
+    background: #3267f5;
+    color: white;
+    padding: 5px 11px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CONTACT CONTENT CARDS
+========================================================= */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.65fr 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.contact-card {
+    background: #ffffff;
+    border: 1px solid #e3e8ef;
+    border-radius: 9px;
+    padding: 25px;
+    box-shadow: 0 2px 7px rgba(20, 40, 70, 0.05);
+}
+
+.contact-card h3 {
+    margin: 0 0 5px;
+    color: #102a43;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.contact-card-subtitle {
+    color: #9aaed0;
+    font-size: 13px;
+    margin-bottom: 23px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #233b56;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.required {
+    color: #3267f5;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    min-height: 43px;
+    border: 1px solid #d8e0eb;
+    border-radius: 7px;
+    padding: 10px 12px;
+    color: #243b53;
+    background: #ffffff;
+    font-size: 13px;
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: #a6b5ca;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #3267f5;
+    box-shadow: 0 0 0 3px rgba(50,103,245,0.10);
+    outline: none;
+}
+
+textarea.form-control {
+    min-height: 125px;
+    resize: vertical;
+}
+
+.submit-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 4px;
+}
+
+.submit-btn {
+    border: 0;
+    background: #3267f5;
+    color: #ffffff;
+    border-radius: 7px;
+    padding: 11px 23px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #2256df;
+}
+
+.submit-hint {
+    color: #98a9c2;
+    font-size: 11px;
+}
+
+.form-status {
+    display: none;
+    margin-top: 15px;
+    padding: 11px 13px;
+    border-radius: 6px;
+    background: #edf7ed;
+    color: #27733a;
+    font-size: 13px;
+}
+
+.form-status.show {
+    display: block;
+}
+
+
+/* =========================================================
+   RIGHT SIDE CONTACT OPTIONS
+========================================================= */
+
+.contact-option {
+    padding: 15px 0;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.contact-option:first-child {
+    padding-top: 0;
+}
+
+.contact-option:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.contact-option-title {
+    color: #183b67;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.contact-option-description {
+    color: #8496af;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.contact-option-meta {
+    margin-top: 6px;
+    color: #3267f5;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CONTACT INFORMATION
+========================================================= */
+
+.info-box {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f6f8fb;
+    border-radius: 7px;
+}
+
+.info-box-title {
+    color: #183b67;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.info-box p {
+    margin: 0;
+    color: #8a9bb2;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .header-container,
+    .hero-container,
+    .contact-section {
+        max-width: calc(100% - 40px);
+    }
+
+    .main-nav {
+        margin-left: 30px;
+        gap: 17px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .main-header {
+        height: auto;
+        padding: 15px 0;
+    }
+
+    .header-container {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .header-actions {
+        margin-left: auto;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .header-actions {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .btn-employer,
+    .btn-admin {
+        flex: 1;
+    }
+
+    .main-nav {
+        gap: 13px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+    }
+
+    .hero-container {
+        padding: 35px 0;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-text {
+        font-size: 14px;
+    }
+
+    .hero-buttons {
+        flex-wrap: wrap;
+    }
+
+    .section-heading {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .submit-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

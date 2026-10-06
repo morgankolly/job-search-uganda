@@ -8,13 +8,7 @@ class UserModel
         $this->pdo = $pdo;
     }
 
-    public function getUserById($id)
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id");
-        $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+  
 
 
     public function getAllUsers()
@@ -243,6 +237,38 @@ public function registerUser($username, $email, $password, $profile = 'default.p
         LIMIT 1
     ");
     $stmt->execute([$email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+public function verifyUser($userId)
+{
+    $stmt = $this->pdo->prepare("
+        SELECT user_id
+        FROM users
+        WHERE user_id = ?
+        LIMIT 1
+    ");
+
+    $stmt->execute([$userId]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function getUserById($userId)
+{
+    $stmt = $this->pdo->prepare("
+        SELECT
+            u.user_name,
+            u.email,
+            u.profile,
+            r.role_name AS role
+        FROM users u
+        LEFT JOIN roles r
+            ON u.role_id = r.role_id
+        WHERE u.user_id = ?
+    ");
+
+    $stmt->execute([$userId]);
+
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 }

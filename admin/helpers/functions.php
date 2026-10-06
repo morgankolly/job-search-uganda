@@ -755,3 +755,77 @@ function generateWhatsAppLink($phone, $message)
     return "https://wa.me/".$phone."?text=".$message;
 
 }
+
+function cvUrl(?string $path): ?string
+{
+    if (!$path) {
+        return null;
+    }
+    return '../' . ltrim($path, '/');
+}
+function publishGuestJobFromPayment(PDO $pdo, JobModel $jobModel, PaymentModel $paymentModel, int $payment_id): bool
+{
+    $payment = $paymentModel->getById($payment_id);
+    if (!$payment) {
+        return false;
+    }
+
+    if ($payment['payment_type'] !== 'pay_per_post' || !empty($payment['guest_job_id'])) {
+        // Not a guest job payment, or already published — nothing to do.
+        return false;
+    }
+
+    $jobData = $paymentModel->getJobPayload($payment_id);
+    if (!$jobData) {
+        return false;
+    }
+
+    $jobReference = generateJobReference($pdo);
+
+    $jobModel->createGuestJob(
+        $jobReference,
+        $jobData['company_name'],
+        $jobData['contact_person'],
+        $jobData['email'],
+        $jobData['phone'],
+        $jobData['company_logo'],
+        $jobData['job_title'],
+        $jobData['category_id'],
+        $jobData['job_type'],
+        $jobData['location'],
+        $jobData['salary'],
+        $jobData['description'],
+        $jobData['requirements'],
+        $jobData['deadline'],
+        $jobData['max_applications']
+    );
+
+    $newJobRow = $pdo->prepare("SELECT job_id FROM guest_jobs WHERE job_reference = ? LIMIT 1");
+    $newJobRow->execute([$jobReference]);
+    $newJob = $newJobRow->fetch(PDO::FETCH_ASSOC);
+
+    if (!$newJob) {
+        return false;
+    }
+
+    $paymentModel->attachGuestJob($payment_id, (int) $newJob['job_id']);
+
+    if (function_exists('sendGuestJobEmail')) {
+        sendGuestJobEmail(
+            $jobData['email'], $jobData['contact_person'], $jobReference,
+            $jobData['company_name'], $jobData['job_title'], $jobData['job_type'],
+            $jobData['location'], $jobData['salary'], $jobData['description'],
+            $jobData['requirements'], $jobData['deadline'], $jobData['max_applications']
+        );
+    }
+
+    if (function_exists('sendGuestWhatsApp')) {
+        sendGuestWhatsApp(
+            $jobData['phone'], $jobData['contact_person'], $jobReference,
+            $jobData['company_name'], $jobData['job_title'],
+            $jobModel->getJobTypeName($jobData['job_type']), $jobData['location']
+        );
+    }
+
+    return true;
+}

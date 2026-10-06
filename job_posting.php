@@ -8,6 +8,7 @@ require_once __DIR__ . '/admin/config/connection.php';
 require_once __DIR__ . '/admin/helpers/functions.php';
 require_once __DIR__ . '/admin/models/JobModel.php';
 require_once __DIR__ . '/admin/controllers/JobController.php';   
+require_once __DIR__ . '/admin/components/Userheader.php';
 $message = "";
 
 $stmt = $pdo->query("SELECT * FROM job_categories ORDER BY category_name ASC");
@@ -39,8 +40,8 @@ $jobTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- begin::GXON CSS Stylesheet -->
     <link rel="stylesheet" href="assets/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="assets/libs/datatables/datatables.min.css">
+
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- end::GXON CSS Stylesheet -->
 
@@ -61,40 +62,9 @@ $jobTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body class="bg-light">
 
-<!-- Attractive Hero Header & Job System Information -->
-    <div class="system-hero">
-        <div class="container">
-            <h1>Connect with Exceptional Talent</h1>
-            <p>Our seamless guest job board lets you list vacant opportunities without the friction of account setups or long registrations. Submitted jobs are reviewed by our team and go live once approved.</p>
-            
-            <!-- Key System Information Points -->
-            <div class="info-features">
-                <div class="feature-item">
-                    <i class="fa-solid fa-user-slash"></i>
-                    <div class="feature-text">
-                        <h6>No Account Setup</h6>
-                        <p>Skip signup entirely. Post in 2 minutes.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <i class="fa-solid fa-bullhorn"></i>
-                    <div class="feature-text">
-                        <h6>Instant Visibility</h6>
-                        <p>Targeted straight to active candidates.</p>
-                    </div>
-                </div>
-                    <div class="feature-item">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                    <div class="feature-text">
-                        <h6>Direct Responses</h6>
-                        <p>Applications land straight in your email.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container py-5">
+
+    <div class="container-expand-lg py-5">
 
         <div class="row justify-content-center">
 

@@ -71,9 +71,9 @@ VALUES
     }
 
 
-   public function getAllOpenJobs()
-{
-    $sql = "
+    public function getAllOpenJobs()
+    {
+        $sql = "
         SELECT
             j.job_id,
             j.job_title,
@@ -105,11 +105,11 @@ VALUES
         ORDER BY j.created_at DESC
     ";
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getJobCategories()
     {
@@ -127,25 +127,25 @@ VALUES
 
 
 
- public function createGuestJob(
-    $job_reference,
-    $company_name,
-    $contact_person,
-    $email,
-    $phone,
-    $company_logo,
-    $job_title,
-    $category_id,
-    $job_type,
-    $location,
-    $salary,
-    $description,
-    $requirements,
-    $deadline,
-    $max_applications
-) {
+    public function createGuestJob(
+        $job_reference,
+        $company_name,
+        $contact_person,
+        $email,
+        $phone,
+        $company_logo,
+        $job_title,
+        $category_id,
+        $job_type,
+        $location,
+        $salary,
+        $description,
+        $requirements,
+        $deadline,
+        $max_applications
+    ) {
 
-    $sql = "INSERT INTO guest_jobs
+        $sql = "INSERT INTO guest_jobs
     (
         job_reference,
         company_name,
@@ -185,42 +185,42 @@ VALUES
     )";
 
 
-    $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
 
 
-    $success = $stmt->execute([
+        $success = $stmt->execute([
 
-        ':job_reference'     => $job_reference,
-        ':company_name'      => $company_name,
-        ':contact_person'    => $contact_person,
-        ':email'             => $email,
-        ':phone'             => $phone,
-        ':company_logo'      => $company_logo,
-        ':category_id'       => $category_id,
-        ':job_title'         => $job_title,
-        ':job_type'          => $job_type,
-        ':location'          => $location,
-        ':salary'            => $salary,
-        ':description'       => $description,
-        ':requirements'      => $requirements,
-        ':deadline'          => $deadline,
-        ':max_applications'  => $max_applications
+            ':job_reference' => $job_reference,
+            ':company_name' => $company_name,
+            ':contact_person' => $contact_person,
+            ':email' => $email,
+            ':phone' => $phone,
+            ':company_logo' => $company_logo,
+            ':category_id' => $category_id,
+            ':job_title' => $job_title,
+            ':job_type' => $job_type,
+            ':location' => $location,
+            ':salary' => $salary,
+            ':description' => $description,
+            ':requirements' => $requirements,
+            ':deadline' => $deadline,
+            ':max_applications' => $max_applications
 
-    ]);
+        ]);
 
 
-    if ($success) {
+        if ($success) {
 
-        return $this->pdo->lastInsertId();
+            return $this->pdo->lastInsertId();
 
+        }
+
+
+        return false;
     }
-
-
-    return false;
-}
-public function getAllGuestJobs()
-{
-    $sql = "
+    public function getAllGuestJobs()
+    {
+        $sql = "
         SELECT
             gj.job_id,
             gj.company_name,
@@ -255,34 +255,34 @@ public function getAllGuestJobs()
         ORDER BY gj.created_at DESC
     ";
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-public function getJobTypeName($job_type)
-{
-    $sql = "
+    public function getJobTypeName($job_type)
+    {
+        $sql = "
         SELECT type_name
         FROM job_types
         WHERE type_id = ?
     ";
 
-    $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
 
-    $stmt->execute([$job_type]);
+        $stmt->execute([$job_type]);
 
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-    if ($result) {
-        return $result['type_name'];
+        if ($result) {
+            return $result['type_name'];
+        }
+
+
+        return "Unknown";
     }
-
-
-    return "Unknown";
-}
 
     /*
     |--------------------------------------------------------------------------
@@ -485,5 +485,74 @@ public function getJobTypeName($job_type)
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getPendingGuestJobs()
+    {
+        $stmt = $this->pdo->query("
+            SELECT 
+                gj.job_id,
+                gj.job_title,
+                gj.company_name,
+                gj.contact_person,
+                gj.email,
+                gj.created_at,
+
+                jt.type_name AS job_type
+
+            FROM guest_jobs gj
+
+            LEFT JOIN job_types jt
+                ON gj.job_type = jt.type_id
+
+            WHERE gj.status = 'pending'
+
+            ORDER BY gj.created_at DESC
+
+            LIMIT 5
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Jobs by category
+    public function getJobsByCategory()
+    {
+        $stmt = $this->pdo->query("
+            SELECT 
+                jc.category_name,
+                COUNT(j.job_id) AS cnt
+            FROM job_categories jc
+            LEFT JOIN jobs j 
+                ON j.job_category = jc.category_id
+            GROUP BY jc.category_id, jc.category_name
+            ORDER BY cnt DESC
+            LIMIT 8
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+    // Guest jobs by category
+    public function getGuestJobsByCategory()
+    {
+        $stmt = $this->pdo->query("
+            SELECT 
+                jc.category_name,
+                COUNT(gj.job_id) AS cnt
+            FROM job_categories jc
+            LEFT JOIN guest_jobs gj 
+                ON gj.category_id = jc.category_id 
+                AND gj.status = 'approved'
+            GROUP BY jc.category_id, jc.category_name
+            ORDER BY cnt DESC
+            LIMIT 8
+        ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
 
