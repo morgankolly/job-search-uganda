@@ -1,56 +1,159 @@
+```php
 <?php
 // admin/lib/PesapalHelper.php
 
 class PesapalHelper
 {
-    private static $ipnCache = [];
-    private static $cacheFile = null;
-    
-    public static function getCachedIpnId($client, $ipnUrl)
-    {
-        // Set cache file path
-        if (self::$cacheFile === null) {
-            // Use a writable directory
-            $cacheDir = __DIR__ . '/../config/cache';
-            if (!is_dir($cacheDir)) {
-                mkdir($cacheDir, 0777, true);
+    /**
+     * Get the IPN ID for the supplied URL.
+     *
+     * If the URL is already registered with Pesapal,
+     * its existing IPN ID is returned.
+     *
+     * If it is not registered, this method registers it
+     * automatically and returns the new IPN ID.
+     */
+    public static function getCachedIpnId(
+        PesapalClient $client,
+        string $ipnUrl
+    ): string {
+
+        $config = $client->config();
+
+        $cacheDir = $config['cache_dir']
+            ?? (__DIR__ . '/../cache');
+
+        if (!is_dir($cacheDir)) {
+            if (
+                !mkdir($cacheDir, 0775, true) &&
+                !is_dir($cacheDir)
+            ) {
+                throw new Exception(
+                    'Unable to create Pesapal cache directory: ' .
+                    $cacheDir
+                );
             }
-            self::$cacheFile = $cacheDir . '/.ipn_id_cache';
         }
-        
-        $cacheKey = md5($ipnUrl);
-        
-        // Check memory cache first
-        if (isset(self::$ipnCache[$cacheKey])) {
-            return self::$ipnCache[$cacheKey];
-        }
-        
-        // Check file cache
-        if (file_exists(self::$cacheFile)) {
-            $cached = @json_decode(file_get_contents(self::$cacheFile), true);
-            if (isset($cached[$cacheKey])) {
-                self::$ipnCache[$cacheKey] = $cached[$cacheKey];
-                return $cached[$cacheKey];
+
+        $cacheFile =
+            $cacheDir . '/pesapal_ipn.json';
+
+        /*
+         * ----------------------------------------------------
+         * 1. Check local cache
+         * ----------------------------------------------------
+         */
+        if (file_exists($cacheFile)) {
+
+            $contents =
+                file_get_contents($cacheFile);
+
+            $data =
+                json_decode(
+                    $contents ?: '',
+                    true
+                );
+
+            if (
+                is_array($data) &&
+                !empty($data['ipn_id']) &&
+                !empty($data['ipn_url']) &&
+                rtrim($data['ipn_url'], '/') ===
+                rtrim($ipnUrl, '/')
+            ) {
+                return $data['ipn_id'];
             }
         }
-        
+
+        /*
+         * ----------------------------------------------------
+         * 2. Check Pesapal for an already registered IPN
+         * ----------------------------------------------------
+         */
         try {
-            $ipnId = $client->registerIpn($ipnUrl);
-            self::$ipnCache[$cacheKey] = $ipnId;
-            
-            // Save to file cache
-            $cached = [];
-            if (file_exists(self::$cacheFile)) {
-                $cached = @json_decode(file_get_contents(self::$cacheFile), true) ?: [];
-            }
-            $cached[$cacheKey] = $ipnId;
-            @file_put_contents(self::$cacheFile, json_encode($cached));
-            
+
+            $ipnId =
+                $client->getIpnIdByUrl($ipnUrl);
+
+            /*
+             * Cache the existing IPN ID.
+             */
+            self::cacheIpn(
+                $cacheFile,
+                $ipnId,
+                $ipnUrl
+            );
+
             return $ipnId;
-        } catch (Exception $e) {
-            error_log("IPN Registration failed: " . $e->getMessage());
-            // Return a dummy IPN ID for testing
-            return 'DUMMY_IPN_' . time();
+
+        } catch (Throwable $e) {
+
+            /*
+             * The URL was not found.
+             *
+             * We will register it below.
+             */
         }
+
+        /*
+         * ----------------------------------------------------
+         * 3. Register the IPN automatically
+         * ----------------------------------------------------
+         */
+        $result =
+            $client->registerIpn(
+                $ipnUrl,
+                'GET'
+            );
+
+        if (
+            !is_array($result) ||
+            empty($result['ipn_id'])
+        ) {
+            throw new Exception(
+                'Pesapal IPN registration failed: ' .
+                json_encode($result)
+            );
+        }
+
+        $ipnId =
+            $result['ipn_id'];
+
+        /*
+         * ----------------------------------------------------
+         * 4. Cache the newly registered IPN ID
+         * ----------------------------------------------------
+         */
+        self::cacheIpn(
+            $cacheFile,
+            $ipnId,
+            $ipnUrl
+        );
+
+        return $ipnId;
+    }
+
+
+    /**
+     * Save IPN information locally.
+     */
+    private static function cacheIpn(
+        string $cacheFile,
+        string $ipnId,
+        string $ipnUrl
+    ): void {
+
+        file_put_contents(
+            $cacheFile,
+            json_encode(
+                [
+                    'ipn_id' => $ipnId,
+                    'ipn_url' => $ipnUrl,
+                    'cached_at' => date('c'),
+                ],
+                JSON_PRETTY_PRINT
+            ),
+            LOCK_EX
+        );
     }
 }

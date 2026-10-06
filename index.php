@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 require_once __DIR__ . '/admin/config/connection.php';
 require_once __DIR__ . '/admin/helpers/functions.php';
 require_once __DIR__ . '/admin/models/JobModel.php';
-include_once __DIR__ . '/admin/components/Userheader.php';
+require_once __DIR__ . '/admin/components/Userheader.php';
 
 
 $jobModel = new JobModel($pdo);
@@ -96,7 +96,7 @@ usort($jobs, function ($a, $b) {
         </div>
 
         <span class="badge bg-primary fs-6">
-            <?= count($jobs) ?> Jobs Available
+             Over <?= count($jobs) ?>  Jobs Available
         </span>
     </div>
 

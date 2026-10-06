@@ -38,9 +38,9 @@ require_once './main/require.php';
                     <div class="card-body p-7 p-sm-9">
 
                         <!-- Logo -->
-                        <div class="text-center mb-4">
-                            <a href="../index.html">
-                                <img src="../assets/images/Logo 1.png" alt="Logo" style="width:80px;height:auto;">
+                        <div class="text-center mb-2">
+                            <a href="index.php">
+                                <img src="../uploads/profile/Job-Search-logo.png" alt="Logo" style="width:80px;height:auto;">
                             </a>
                         </div>
 

@@ -307,11 +307,9 @@ if (empty($_profileSrc)) {
 
     <!-- Brand -->
     <a href="dashboard.php" class="sidebar-brand">
-        <div style="width:32px;height:32px;background:#0d6efd;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-            <i class="fas fa-briefcase text-white" style="font-size:.85rem;"></i>
-        </div>
-        <span>Job Search Uganda</span>
-    </a>
+    <img src="../uploads/profile/Job-Search-logo.png" alt="Job Search Uganda Logo" style="width:32px;height:32px;border-radius:8px;object-fit:contain;">
+    <span>Job Search Uganda</span>
+</a>
 
     <!-- Navigation -->
     <nav class="sidebar-nav">

@@ -1,4 +1,4 @@
-r<?php
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -6,14 +6,7 @@ require_once __DIR__ . '/config/connection.php';
 require_once __DIR__ . '/helpers/functions.php';
 require_once __DIR__ . '/models/JobModel.php';
 
-// Auth gate — redirect if no session.
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
-
-// Verify the session user actually exists in the current DB.
-// Catches stale sessions after a DB re-import or reimport.
+/* ── Validate session ─────────────────────────────────────── */
 $_chk = $pdo->prepare("SELECT user_id FROM users WHERE user_id = ? LIMIT 1");
 $_chk->execute([$_SESSION['user_id']]);
 if (!$_chk->fetch()) {
@@ -24,10 +17,13 @@ if (!$_chk->fetch()) {
     exit;
 }
 
-$jobModel = new JobModel($pdo);
-
 $error   = '';
 $success = '';
+
+/* ── Handle form submission (controller does the work) ──────── */
+require_once __DIR__ . '/controllers/JobController.php';
+
+$jobModel = new JobModel($pdo);
 
 /* ── Load lookups ─────────────────────────────────────────── */
 $categories = $pdo->query(
@@ -37,68 +33,6 @@ $categories = $pdo->query(
 $jobTypes = $pdo->query(
     "SELECT type_id, type_name FROM job_types WHERE status = 'active' ORDER BY type_name ASC"
 )->fetchAll(PDO::FETCH_ASSOC);
-
-/* ── Handle POST ──────────────────────────────────────────── */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['createJob'])) {
-
-    $job_title        = trim($_POST['job_title']        ?? '');
-    $company_name     = trim($_POST['company_name']     ?? '');
-    $category_id      = trim($_POST['job_category']     ?? '');
-    $location         = trim($_POST['location']         ?? '');
-    $salary           = trim($_POST['salary']           ?? '');
-    $job_type         = trim($_POST['job_type']         ?? '');
-    $deadline         = $_POST['deadline']              ?? '';
-    $max_applications = max(1, (int) ($_POST['max_applications'] ?? 50));
-    $description      = trim($_POST['description']      ?? '');
-    $requirements     = trim($_POST['requirements']     ?? '');
-
-    // Validate required fields.
-    if (!$job_title || !$company_name || !$category_id || !$job_type || !$description) {
-        $error = "Please fill in all required fields (Job Title, Company, Category, Job Type, Description).";
-    }
-
-    // Handle new category.
-    if (!$error && $category_id === 'new') {
-        $newCat = trim($_POST['new_category'] ?? '');
-        if (!$newCat) {
-            $error = "Please enter a name for the new category.";
-        } else {
-            $chk = $pdo->prepare("SELECT category_id FROM job_categories WHERE category_name = ?");
-            $chk->execute([$newCat]);
-            if ($row = $chk->fetch()) {
-                $category_id = $row['category_id'];
-            } else {
-                $ins = $pdo->prepare("INSERT INTO job_categories (category_name) VALUES (?)");
-                $ins->execute([$newCat]);
-                $category_id = $pdo->lastInsertId();
-            }
-        }
-    }
-
-    if (!$error) {
-        $ok = $jobModel->createJob(
-            $_SESSION['user_id'],
-            $job_title,
-            $company_name,
-            $category_id,
-            $location,
-            $salary,
-            $job_type,
-            $description,
-            $requirements,
-            $deadline ?: null,
-            $max_applications
-        );
-
-        if ($ok) {
-            $success = "Job posted successfully! It is now live on the public board.";
-            // Clear values after success.
-            $_POST = [];
-        } else {
-            $error = "Database error — failed to save the job. Please try again.";
-        }
-    }
-}
 
 /* ── Dashboard stats for sidebar ─────────────────────────── */
 $totalJobs  = (int) $pdo->query("SELECT COUNT(*) FROM jobs")->fetchColumn();

@@ -19,9 +19,9 @@
 
         <!-- Logo -->
         <a class="navbar-brand fw-bold text-primary" href="index.php">
-            <i class="img-fluid"><img src="uploads/profile/Logo 1.png"
+            <i class="img-fluid"><img src="uploads/profile/Job-Search-logo.png"
                     class="img-fluid"
-                    style="max-height:50px;"
+                    style="max-height:80px;"
                     alt="Job Search"></i>
         </a>
 
@@ -39,37 +39,37 @@
 
                 <li class="nav-item">
                     <a class="nav-link active" href="index.php">
-                        <i class="fas fa-home me-1"></i> Home
+                        <i class="me-1"></i> Home
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">
-                        <i class="fas fa-search me-1"></i> Browse Jobs
+                        <i class=" me-1"></i> Browse Jobs
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="companies.php">
-                        <i class="fas fa-building me-1"></i> Companies
+                        <i class=" me-1"></i> Companies
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="job_posting.php">
-                        <i class="fas fa-plus-circle me-1"></i> Post a Job
+                        <i class=" me-1"></i> Post a Job
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="about.php">
-                        <i class="fas fa-info-circle me-1"></i> About
+                        <i class=" me-1"></i> About
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="contact.php">
-                        <i class="fas fa-envelope me-1"></i> Contact
+                        <i class=" me-1"></i> Contact
                     </a>
                 </li>
 
@@ -79,12 +79,12 @@
             <div class="d-flex align-items-center gap-2">
 
                 <a href="job_posting.php" class="btn btn-outline-primary">
-                    <i class="fas fa-bullhorn me-1"></i>
+                    <i class=" me-1"></i>
                     Employer
                 </a>
 
                 <a href="admin/index.php" class="btn btn-primary">
-                    <i class="fas fa-sign-in-alt me-1"></i>
+                    <i class=" me-1"></i>
                     Admin Login
                 </a>
 
