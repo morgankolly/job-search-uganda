@@ -48,15 +48,7 @@ $jobTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Premium custom styling applied purely via CSS -->
-    <style>
-        body.bg-light {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
-            font-family: system-ui, -apple-system, sans-serif;
-            color: #334155;
-        }
-        
-       
-    </style>
+   
 
 </head>
 
@@ -64,7 +56,7 @@ $jobTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-    <div class="container-expand-lg py-5">
+    <div class="container-expand-lg py-7">
 
         <div class="row justify-content-center">
 

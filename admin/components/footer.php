@@ -5,7 +5,7 @@
                 &copy; <?= date('Y') ?> Job Search Uganda
             </p>
             <ul class="list-inline mb-0 d-flex gap-3">
-                <li><a class="text-muted small" href="../index.php" target="_blank">Public Site</a></li>
+                <li><a class="text-muted small" href="index.php" target="_blank">Public Site</a></li>
                 <li><a class="text-muted small" href="jobs.php">Manage Jobs</a></li>
                 <li><a class="text-muted small" href="applications.php">Applications</a></li>
                 <li><a class="text-muted small" href="logout.php" class="text-danger">Logout</a></li>

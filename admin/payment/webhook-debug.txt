@@ -1,0 +1,49 @@
+Apache write test
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: subscribe
+Request token supplied: YES
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: MISSING
+Request token supplied: NO
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: MISSING
+Request token supplied: NO
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: subscribe
+Request token supplied: YES
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: MISSING
+Request token supplied: NO
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: subscribe
+Request token supplied: YES
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: MISSING
+Request token supplied: NO
+---
+ENV token loaded: YES
+ENV token matches expected: YES
+Request method: GET
+Mode received: MISSING
+Request token supplied: NO
+---

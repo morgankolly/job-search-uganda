@@ -1,8 +1,5 @@
 <?php
-/**
- * Minimal .env loader — no Composer dependency needed.
- * Reads /project-root/.env and makes values available via env('KEY').
- */
+
 
 if (!function_exists('loadEnv')) {
     function loadEnv(string $path): void
