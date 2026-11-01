@@ -1,0 +1,43 @@
+
+<?php
+
+
+require_once __DIR__ . '/../config/connection.php';
+
+$verifyToken = $_ENV['WHATSAPP_VERIFY_TOKEN'] ?? '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $mode = $_GET['hub_mode'] ?? $_GET['hub.mode'] ?? '';
+    $token = $_GET['hub_verify_token'] ?? $_GET['hub.verify_token'] ?? '';
+    $challenge = $_GET['hub_challenge'] ?? $_GET['hub.challenge'] ?? '';
+
+    if ($mode === 'subscribe' && $verifyToken !== '' && hash_equals($verifyToken, $token)) {
+        http_response_code(200);
+        header('Content-Type: text/plain');
+        echo $challenge;
+    } else {
+        http_response_code(403);
+        echo 'Verification failed';
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $payload = file_get_contents('php://input');
+
+    // Temporary logging for development only.
+    // Do not log access tokens or other secrets.
+    file_put_contents(
+        __DIR__ . '/whatsapp-webhook.log',
+        date('c') . ' ' . $payload . PHP_EOL,
+        FILE_APPEND | LOCK_EX
+    );
+
+    http_response_code(200);
+    echo 'EVENT_RECEIVED';
+    exit;
+}
+
+http_response_code(405);
+echo 'Method not allowed';
+

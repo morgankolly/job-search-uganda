@@ -829,3 +829,49 @@ function publishGuestJobFromPayment(PDO $pdo, JobModel $jobModel, PaymentModel $
 
     return true;
 }
+function hrDashboardTableExists(PDO $pdo, string $table): bool
+{
+    $allowed = ['users', 'roles', 'employees', 'jobs', 'applications', 'job_categories', 'appointments'];
+    if (!in_array($table, $allowed, true)) {
+        return false;
+    }
+
+    $stmt = $pdo->prepare(
+        'SELECT COUNT(*) FROM information_schema.tables
+         WHERE table_schema = DATABASE() AND table_name = ?'
+    );
+    $stmt->execute([$table]);
+    return (int) $stmt->fetchColumn() > 0;
+}
+
+function hrDashboardColumns(PDO $pdo, string $table): array
+{
+    if (!hrDashboardTableExists($pdo, $table)) {
+        return [];
+    }
+    return $pdo->query("SHOW COLUMNS FROM `$table`")->fetchAll(PDO::FETCH_COLUMN);
+}
+
+function hrDashboardFirstColumn(array $columns, array $choices): ?string
+{
+    foreach ($choices as $choice) {
+        if (in_array($choice, $columns, true)) {
+            return $choice;
+        }
+    }
+    return null;
+}
+
+function hrDashboardCount(PDO $pdo, string $sql, array $params = []): int
+{
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return (int) $stmt->fetchColumn();
+}
+
+function hrDashboardSelect(PDO $pdo, string $sql, array $params = []): array
+{
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

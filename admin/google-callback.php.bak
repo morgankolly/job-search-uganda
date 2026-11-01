@@ -1,0 +1,87 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+
+require '../vendor/autoload.php';
+require_once __DIR__ . "/config/connection.php";
+
+$client = new Google_Client();
+
+$client->setClientId($_ENV['GOOGLE_CLIENT_ID']);
+$client->setClientSecret($_ENV['GOOGLE_CLIENT_SECRET']);
+$client->setRedirectUri($_ENV['GOOGLE_REDIRECT_URI']);
+
+$client->addScope("email");
+$client->addScope("profile");
+if (isset($_GET['code']))
+{
+    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+
+    if (!isset($token['error']))
+    {
+        $client->setAccessToken($token['access_token']);
+
+        $google_service = new Google_Service_Oauth2($client);
+        $data = $google_service->userinfo->get();
+
+        $google_id = $data->id;
+        $name      = $data->name;
+        $email     = $data->email;
+        $picture   = $data->picture;
+
+        $stmt = $pdo->prepare("SELECT user_id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch();
+
+        if ($result)
+        {
+            // Existing user
+            $user_id = $result['user_id'];
+
+            // Update Google information
+            $update = $pdo->prepare("
+                UPDATE users
+                SET google_id = ?, profile = ?
+                WHERE user_id = ?
+            ");
+            $update->execute([$google_id, $picture, $user_id]);
+        }
+        else
+        {
+            // New user
+            $insert = $conn->prepare("
+                INSERT INTO users
+                (google_id, user_name, email, profile)
+                VALUES (?, ?, ?, ?)
+            ");
+
+            $insert->execute([
+                $google_id,
+                $name,
+                $email,
+                $profile
+            ]);
+
+            $user_id = $pdo->lastInsertId();
+        }
+
+        // Login Session
+        $_SESSION['user_id']   = $user_id;
+        $_SESSION['google_id'] = $google_id;
+        $_SESSION['name']      = $name;
+        $_SESSION['email']     = $email;
+        $_SESSION['picture']   = $picture;
+
+        session_write_close();
+
+        header("Location: dashboard.php");
+        exit;
+    }
+    else
+    {
+        die("Google authentication failed.");
+    }
+}
+?>

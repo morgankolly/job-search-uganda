@@ -8,8 +8,26 @@ class UserModel
         $this->pdo = $pdo;
     }
 
-  
 
+
+        public static function requireLogin(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php");   // your login page
+            exit;
+        }
+    }
+    public function emailExists(string $email): bool
+{
+    $sql = "SELECT COUNT(*) FROM users WHERE email = :email";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['email' => $email]);
+
+    return (int) $stmt->fetchColumn() > 0;
+}
 
     public function getAllUsers()
     {
@@ -26,15 +44,15 @@ class UserModel
 
     }
 
-//   public function createUser($username, $email, $password, $profile)
+    //   public function createUser($username, $email, $password, $profile)
 // {
 //     $sql = "INSERT INTO users
 //             (user_name,email,password,profile)
 //             VALUES (?,?,?,?)";
 
-//     $stmt = $this->pdo->prepare($sql);
+    //     $stmt = $this->pdo->prepare($sql);
 
-//     return $stmt->execute([
+    //     return $stmt->execute([
 //         $username,
 //         $email,
 //         $password,
@@ -44,8 +62,8 @@ class UserModel
 
 
     public function getUserByUsername(string $username): ?array
-{
-    $sql = "
+    {
+        $sql = "
         SELECT 
             u.user_id,
             u.user_name,
@@ -58,33 +76,122 @@ class UserModel
         LIMIT 1
     ";
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(':user_name', $username, PDO::PARAM_STR);
-    $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':user_name', $username, PDO::PARAM_STR);
+        $stmt->execute();
 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $user ?: null;
-}
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user ?: null;
+    }
 
 
-public function registerUser($username, $email, $password, $profile = 'default.png', $role_id = 2)
-{
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+      public function registerUser($username, $email, $password, $profile = 'default.png', $role_id = 0)
+    {
+        // Role must exist in the roles table, no silent fallback
+        if (!$this->roleExists((int) $role_id)) {
+            return false;
+        }
 
-    $stmt = $this->pdo->prepare("
-        INSERT INTO users (user_name, email, password, profile, role_id)
-        VALUES (:username, :email, :password, :profile, :role_id)
-    ");
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    return $stmt->execute([
-        ':username' => $username,
-        ':email'    => $email,
-        ':password' => $hashedPassword,
-        ':profile'  => $profile,
-        ':role_id'  => (int) $role_id
-    ]);
-}
+        $stmt = $this->pdo->prepare("
+            INSERT INTO users (user_name, email, password, profile, role_id)
+            VALUES (:username, :email, :password, :profile, :role_id)
+        ");
 
+        return $stmt->execute([
+            ':username' => $username,
+            ':email'    => $email,
+            ':password' => $hashedPassword,
+            ':profile'  => $profile,
+            ':role_id'  => (int) $role_id
+        ]);
+    }
+
+        // Fetch a user with their role name, for login
+   
+
+    // Where each role lands after login (paths relative to the project root)
+    public function getDashboardPath(?string $roleName): string
+    {
+        $paths = [
+            'admin'    => 'admin/dashboard.php',
+            'hr'       => 'hr/dashboard.php',
+            'employer' => 'employer/dashboard.php',
+            'agent'    => 'agent/dashboard.php',
+            'worker'   => 'worker/dashboard.php',
+        ];
+        return $paths[strtolower((string) $roleName)] ?? 'index.php';
+    }
+
+    // Page guard: call at the top of every protected page
+    public static function requireRole(array $allowedRoleNames): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $role = strtolower($_SESSION['role_name'] ?? '');
+        $allowed = array_map('strtolower', $allowedRoleNames);
+
+        if (empty($_SESSION['user_id']) || !in_array($role, $allowed, true)) {
+            header('Location: /job-search-system/login.php');
+            exit;
+        }
+    }
+
+        public function roleExists(int $role_id): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT 1 FROM roles WHERE role_id = ? LIMIT 1");
+        $stmt->execute([$role_id]);
+        return (bool) $stmt->fetchColumn();
+    }
+   
+
+    private const PROFILE_UPLOAD_DIR = __DIR__ . '/../../uploads/profile/';
+
+    /**
+     * Saves an uploaded profile image.
+     * Returns the new filename, null if no file was chosen, or false on failure.
+     */
+    public function saveProfileImage(array $file)
+    {
+        if (empty($file['name']) || $file['error'] === UPLOAD_ERR_NO_FILE) {
+            return null;
+        }
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            return false;
+        }
+
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        if (!in_array($ext, $allowed, true)) {
+            return false;
+        }
+
+        if (!is_dir(self::PROFILE_UPLOAD_DIR)) {
+            mkdir(self::PROFILE_UPLOAD_DIR, 0755, true);
+        }
+
+        $filename = time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+        if (!move_uploaded_file($file['tmp_name'], self::PROFILE_UPLOAD_DIR . $filename)) {
+            return false;
+        }
+        return $filename;
+    }
+
+    /**
+     * Deletes an uploaded profile image file (never the default one).
+     */
+    public function deleteProfileImage(?string $filename): void
+    {
+        if (empty($filename) || $filename === 'default.png') {
+            return;
+        }
+        $path = self::PROFILE_UPLOAD_DIR . basename($filename);
+        if (is_file($path)) {
+            unlink($path);
+        }
+    }
     public function updateUser($user_id, $username, $email, $profile)
     {
         $stmt = $this->pdo->prepare("
@@ -142,6 +249,12 @@ public function registerUser($username, $email, $password, $profile = 'default.p
             echo "Error fetching roles: " . $e->getMessage();
             return [];
         }
+    }
+
+        public function getAllRoles(): array
+    {
+        $stmt = $this->pdo->query("SELECT role_id, role_name FROM roles ORDER BY role_id ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function updateRole(string $username, string $role)
     {
@@ -228,34 +341,34 @@ public function registerUser($username, $email, $password, $profile = 'default.p
     }
 
     public function getUserByEmail($email)
-{
-    $stmt = $this->pdo->prepare("
+    {
+        $stmt = $this->pdo->prepare("
         SELECT u.*, r.role_name
         FROM users u
         LEFT JOIN roles r ON u.role_id = r.role_id
         WHERE u.email = ?
         LIMIT 1
     ");
-    $stmt->execute([$email]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-public function verifyUser($userId)
-{
-    $stmt = $this->pdo->prepare("
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function verifyUser($userId)
+    {
+        $stmt = $this->pdo->prepare("
         SELECT user_id
         FROM users
         WHERE user_id = ?
         LIMIT 1
     ");
 
-    $stmt->execute([$userId]);
+        $stmt->execute([$userId]);
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
-public function getUserById($userId)
-{
-    $stmt = $this->pdo->prepare("
+    public function getUserById($userId)
+    {
+        $stmt = $this->pdo->prepare("
         SELECT
             u.user_name,
             u.email,
@@ -267,10 +380,10 @@ public function getUserById($userId)
         WHERE u.user_id = ?
     ");
 
-    $stmt->execute([$userId]);
+        $stmt->execute([$userId]);
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
 

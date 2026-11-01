@@ -9,9 +9,14 @@ require_once './models/UserModel.php';
 
 $userModel = new UserModel($pdo);
 
-$message = "";
 
 
+$message  = '';
+$error    = '';
+$role_id  = 0;      // so views can always read it
+$username = '';
+$email    = '';
+$roles    = $userModel->getAllRoles();   // load once, before the create block
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +29,7 @@ $message = "";
   <!-- CSS -->
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/libs/fontawesome/css/all.min.css">
-
-
 </head>
-
-
 
 <body style="min-height:100vh; display:flex; align-items:center; justify-content:center; background:#f5f6fa;">
 
@@ -52,50 +53,58 @@ $message = "";
           </div>
 
           <!-- FORM -->
-        <form method="POST" enctype="multipart/form-data">
+          <form method="POST" enctype="multipart/form-data">
 
-    <div class="mb-3">
-        <label class="form-label">Full Name</label>
-        <input
-    type="text"
-    class="form-control"
-    name="username"
-    placeholder="Full Name"
-    required>
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" name="username" placeholder="Full Name" required>
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-control" name="email" placeholder="info@example.com" required>
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-control" name="email" placeholder="info@example.com" required>
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" name="password" placeholder="********" required>
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="********" required>
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Profile Image</label>
-        <input class="form-control" type="file" name="profile" accept="image/*">
-    </div>
+            <!-- ========== ROLE SELECTION ========== -->
+            <div class="mb-3">
+              <label class="form-label">Assign Role</label>
+              <select class="form-select" name="role_id" required>
+                <option value="" disabled selected>-- Select Role --</option>
+                <?php foreach ($roles as $role): ?>
+                  <option value="<?= (int) $role['role_id'] ?>">
+                    <?= htmlspecialchars(ucfirst($role['role_name'])) ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
 
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" id="termsConditions" required>
-        <label class="form-check-label">
-            I agree to privacy policy & terms
-        </label>
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Profile Image</label>
+              <input class="form-control" type="file" name="profile" accept="image/*">
+            </div>
 
-   <button type="submit" name="createUser" class="btn btn-primary w-100">
-    Sign Up
-</button>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="termsConditions" required>
+              <label class="form-check-label">
+                I agree to privacy policy & terms
+              </label>
+            </div>
 
-    <p class="text-center">
-        Have an account?
-        <a href="index.php">Sign In</a>
-    </p>
+            <button type="submit" name="createUser" class="btn btn-primary w-100">
+              Sign Up
+            </button>
 
-</form>
+            <p class="text-center mt-3">
+              Have an account?
+              <a href="index.php">Sign In</a>
+            </p>
+
+          </form>
 
         </div>
 
@@ -103,8 +112,6 @@ $message = "";
 
     </div>
   </div>
-
-
 
   <!-- JS -->
   <script src="../assets/libs/global/global.min.js"></script>

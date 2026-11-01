@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+require_once dirname(__DIR__) . '/bootstrap.php';
+
+/*
+|--------------------------------------------------------------------------
+| Google OAuth Configuration
+|--------------------------------------------------------------------------
+*/
+
+$clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? '';
+$clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'] ?? '';
+$redirectUri = $_ENV['GOOGLE_REDIRECT_URI'] ?? '';
+
+if (
+    $clientId === '' ||
+    $clientSecret === '' ||
+    $redirectUri === ''
+) {
+    die(
+        '<h3>Google Login Configuration Error</h3>' .
+        '<p>GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET or GOOGLE_REDIRECT_URI is missing.</p>'
+    );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Google Client
+|--------------------------------------------------------------------------
+*/
+
+$client = new Google\Client();
+
+$client->setClientId($clientId);
+$client->setClientSecret($clientSecret);
+$client->setRedirectUri($redirectUri);
+
+$client->addScope('email');
+$client->addScope('profile');
+
+/*
+|--------------------------------------------------------------------------
+| Redirect
+|--------------------------------------------------------------------------
+*/
+
+header('Location: ' . $client->createAuthUrl());
+exit;
